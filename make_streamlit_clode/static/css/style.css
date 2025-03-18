@@ -1,0 +1,342 @@
+/* 전역 스타일 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+    --bg-main: #F9FAFB;
+    --bg-card: white;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --primary-color: #3B82F6;
+    --primary-gradient-start: #1E3A8A;
+    --primary-gradient-end: #3B82F6;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.05);
+    --border-color: #E5E7EB;
+    --success-color: #10B981;
+    --error-color: #EF4444;
+    --warning-color: #F59E0B;
+    --purple-color: #8B5CF6;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0;
+    padding: 15px;
+}
+
+/* 헤더 스타일 */
+.header-container {
+    padding: 1rem 0;
+    background: linear-gradient(to right, var(--primary-gradient-start), var(--primary-gradient-end));
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.header-container h1 {
+    color: white !important;
+    margin: 0;
+}
+
+/* 메트릭 카드 스타일 */
+.metric-card {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+}
+.metric-card:hover {
+    transform: translateY(-2px);
+}
+.metric-title {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.metric-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* 진행 막대 스타일 */
+.progress-bar {
+    height: 10px;
+    width: 100%;
+    background-color: var(--border-color);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.progress-bar .filled {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 5px;
+    transition: width 1s ease-in-out;
+    background-color: var(--primary-color);
+}
+
+/* 보유 정보 카드 스타일 */
+.holdings-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 1rem;
+}
+.holding-item {
+    flex: 1;
+    min-width: 120px;
+    background-color: var(--bg-card);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.holding-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+.holding-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* 부서 카드 스타일 */
+.department-card {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--primary-color);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* 분석 카드 스타일 */
+.analysis-card {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* 상승/하락 비교 컨테이너 */
+.comparison-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 1rem;
+}
+.comparison-item {
+    flex: 1;
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.comparison-header {
+    padding: 0.75rem;
+    color: white;
+    font-weight: 500;
+}
+.comparison-item.positive .comparison-header {
+    background-color: var(--success-color);
+}
+.comparison-item.negative .comparison-header {
+    background-color: var(--error-color);
+}
+.comparison-content {
+    padding: 1rem;
+    color: var(--text-primary);
+}
+
+/* 촉매 아이템 스타일 */
+.catalyst-item {
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.catalyst-item.short-term {
+    border-left: 4px solid var(--warning-color);
+}
+.catalyst-item.mid-term {
+    border-left: 4px solid var(--primary-color);
+}
+.catalyst-item.long-term {
+    border-left: 4px solid var(--purple-color);
+}
+
+/* 종합 보고서 스타일 */
+.full-report-container {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.full-report-header {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-gradient-start);
+}
+.full-report-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+.full-report-content {
+    line-height: 1.7;
+    color: var(--text-primary);
+}
+.full-report-content p {
+    margin-bottom: 1rem;
+}
+
+/* 모니터링 지표 스타일 */
+.monitoring-metrics {
+    background-color: var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: background-color 0.3s;
+}
+.monitoring-metrics ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: var(--text-primary);
+}
+.monitoring-metrics li {
+    margin-bottom: 0.75rem;
+}
+
+/* 다크 모드 스타일 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-main: #111827;
+        --bg-card: #1F2937;
+        --text-primary: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --primary-color: #60A5FA;
+        --primary-gradient-start: #2563EB;
+        --primary-gradient-end: #60A5FA;
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+        --border-color: #374151;
+        --success-color: #34D399;
+        --error-color: #F87171;
+        --warning-color: #FBBF24;
+        --purple-color: #A78BFA;
+    }
+    
+    .metric-card, .holding-item, .department-card, .analysis-card, 
+    .comparison-item, .catalyst-item, .full-report-container {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+    
+    .full-report-header {
+        color: var(--primary-color);
+    }
+}
+
+/* 모바일 반응형 스타일 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .header-container {
+        padding: 0.75rem 0;
+    }
+    
+    .header-container h1 {
+        font-size: 1.5rem;
+    }
+    
+    .metric-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .metric-title {
+        font-size: 0.8rem;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+    
+    .comparison-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .holdings-container {
+        gap: 10px;
+    }
+    
+    .holding-item {
+        min-width: 100px;
+        padding: 0.75rem;
+    }
+    
+    .full-report-container {
+        padding: 1.25rem;
+    }
+    
+    .full-report-header {
+        font-size: 1.3rem;
+    }
+    
+    .full-report-content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+}
+
+/* 모바일에서 다크모드일 때 가독성 향상을 위한 추가 스타일 */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+    .metric-card, .holding-item, .department-card, .analysis-card, 
+    .comparison-item, .catalyst-item, .full-report-container {
+        padding: 0.85rem;
+    }
+    
+    .metric-title, .holding-label {
+        color: #E5E7EB;
+        font-weight: 500;
+    }
+    
+    .progress-bar {
+        height: 8px;
+        background-color: #4B5563;
+    }
+    
+    .monitoring-metrics {
+        background-color: #2D3748;
+    }
+    
+    .monitoring-metrics li {
+        margin-bottom: 1rem;
+    }
+    
+    .catalyst-item, .department-card {
+        border-left-width: 5px;
+    }
+}
