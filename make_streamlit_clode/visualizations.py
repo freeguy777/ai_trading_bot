@@ -12,7 +12,7 @@ project_root = os.path.dirname(current_dir)
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-from kis_trader.main import get_account_profit_rate, get_average_price, get_current_price
+from kis_trader.main import get_account_profit_rate, get_average_price, get_current_price, get_holding_amount
 
 load_dotenv("config/.env")
 ticker = os.getenv("TICKER")
@@ -38,11 +38,12 @@ def render_holdings_card(report):
     current_price = f"{current_price:,.2f}"
     return_pct = get_account_profit_rate()
     avg_price = get_average_price(ticker, exchange_name='나스닥')
+    holding_amount = get_holding_amount(ticker, exchange_name="나스닥")
 
     if avg_price == -1:                    # KIS 래퍼가 “없음”일 때 -1 반환
         avg_price_disp = "보유수량 없음"
     else:
-        avg_price_disp = f"{avg_price:,.2f}"   # 두 자리 반올림·콤마 포함
+        avg_price_disp = avg_price   # 두 자리 반올림·콤마 포함
 
     # 수익률에 따른 색상 결정
     #return_value = report.get('current_return_pct', 0)
@@ -56,7 +57,7 @@ def render_holdings_card(report):
             <div class="holding-value">{current_price}</div>
         </div>
         <div class="holding-item">
-            <div class="holding-label">수익률</div>
+            <div class="holding-label">계좌 수익률</div>
             <div class="holding-value" style="color:{return_color}">
                 {return_prefix}{return_pct}
             </div>
@@ -64,6 +65,10 @@ def render_holdings_card(report):
         <div class="holding-item">
             <div class="holding-label">평균단가</div>
             <div class="holding-value">{avg_price_disp}</div>
+        </div>
+        <div class="holding-item">
+            <div class="holding-label">보유수량</div>
+            <div class="holding-value">{holding_amount}</div>
         </div>
     </div>
     """

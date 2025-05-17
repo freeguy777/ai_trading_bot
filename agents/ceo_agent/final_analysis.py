@@ -79,7 +79,7 @@ def perform_final_analysis(
             "decision": "Error",
             "confidence": "N/A",
             "position_sizing": 0.0,
-            "full_report": "오류: .env 파일에서 GEMINI_API_KEY를 찾을 수 없습니다.",
+            "analysis_summary": "오류: .env 파일에서 GEMINI_API_KEY를 찾을 수 없습니다.",
         }
 
     client = genai.Client(api_key=api_key)
@@ -208,7 +208,7 @@ def perform_final_analysis(
 
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-pro-exp-03-25",
+            model="gemini-2.5-pro-preview-05-06",
             contents=full_prompt,
             config={
                 "response_mime_type": "application/json",

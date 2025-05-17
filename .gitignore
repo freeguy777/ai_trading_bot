@@ -4,3 +4,4 @@ Pipfile
 Pipfile.lock
 token.dat
 __init__.py
+.cursor

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import List
+import time
 
 import pandas as pd
 import pandas_datareader.data as web
@@ -27,13 +28,18 @@ def get_price_series_yf(
     """Download daily prices via yfinance."""
     frames = []
     for sym in symbols:
-        df = yf.download(sym, start=start, end=end, progress=False, auto_adjust=True)
-        if df.empty:
-            print(f"[WARN] {sym} returned empty frame")
+        try:
+            df = yf.download(sym, start=start, end=end, progress=False, auto_adjust=True)
+            if df.empty:
+                print(f"[WARN] {sym} returned empty frame")
+                continue
+            df = df[["Close"]].rename(columns={"Close": sym})
+            df.index.name = "date"
+            frames.append(df)
+            time.sleep(1)  # API 호출 사이에 1초 딜레이 추가
+        except Exception as e:
+            print(f"[ERROR] Failed to download {sym}: {str(e)}")
             continue
-        df = df[["Close"]].rename(columns={"Close": sym})
-        df.index.name = "date"
-        frames.append(df)
 
     if not frames:
         raise RuntimeError("No price data via yfinance.")

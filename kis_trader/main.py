@@ -172,8 +172,8 @@ def get_average_price(ticker: str, exchange_name: str = "나스닥") -> float:
     # 2) 해당 항목의 종목 코드(pdno)가 "TSLA"이면
         if item.get("ovrs_pdno") == ticker:
             # 3) 문자열을 실수(float)로 변환해 저장
-            avg_unpr3 = item["pchs_avg_pric"]
-            return avg_unpr3
+            avg_price = float(item["pchs_avg_pric"])
+            return round(avg_price, 2)
 
     return -1
 

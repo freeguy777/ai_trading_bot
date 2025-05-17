@@ -52,13 +52,13 @@ class CEO_Agent:
         chart_report     = self._dispatch("차트 분석 부서",      get_chart_report,     ticker,        ticker=ticker)
         research_report  = self._dispatch("리서치 분석 부서",    get_research_report,  ticker, 5, False, ticker=ticker)
         financial_report = self._dispatch("재무제표 분석 부서",  get_financial_report, ticker,        ticker=ticker)
-        macro_report     = self._dispatch("매크로 분석 부서",    get_macro_report,                   ticker=ticker)
+        macro_report     = self._dispatch("매크로 분석 부서",    get_macro_report)
 
         # 5. 최종 분석 부서(LLM)에 종합 분석 및 결정 요청
         print("📀 CEO: 수신된 보고서들을 종합하여 최종 투자 판단을 요청합니다.")
         final_decision_data = {}
         try:
-            holding_shares  = get_holding_amount(ticker, exchange_name="나스닥")  #보유 수량
+            holding_shares  = get_holding_amount(ticker, exchange_name="나스닥")       #보유 수량
             average_price = get_average_price(ticker, exchange_name="나스닥")          #평단가
             final_decision_data = perform_final_analysis(chart_report, research_report, financial_report, macro_report, ticker, holding_shares, average_price)
             if "오류" in final_decision_data:
@@ -70,7 +70,6 @@ class CEO_Agent:
                 f"### 차트 보고서:\n{chart_report}\n\n"
                 f"### 리서치 보고서:\n{research_report}"
             )
-            final_decision_data = {"투자결정": "Error","신뢰도": "N/A","포지션비중": "N/A","전체분석요약": error_message,}
         
         # 6. 매매 진행
         print(f"CEO: 매매 진행 바랍니다.")
@@ -139,6 +138,13 @@ class CEO_Agent:
         ticker     : str  
         Returns  : int 
         """
+        if allocation == 'N/A':
+            print(f"Warning: '포지션비중' is 'N/A' for {ticker}.")
+        else:
+            try:
+                allocation = float(allocation)
+            except ValueError:
+                print(f"Error: Could not convert allocation '{allocation}' to float for {ticker}. Setting to 0.")
         pct = allocation/100
         total_cash_withholdings_usd    = float(get_total_cash_usd(exchange_name="나스닥"))
         price           = float(get_current_price(ticker, "나스닥"))
@@ -157,13 +163,13 @@ class CEO_Agent:
 
         return 0
 
-    def _dispatch(self, dept_name: str, func, *args, ticker: str) -> str:
-        print(f"📀 CEO: {dept_name}, {ticker} 분석 보고 바랍니다.")
+    def _dispatch(self, dept_name: str, func, *args, ticker: str = None) -> str:
+        print(f"📀 CEO: {dept_name}, {ticker if ticker else '전체 시장'} 분석 보고 바랍니다.")
         try:
             report = func(*args)
             print(f"💿 CEO: {dept_name} 보고서 수신 완료.")
         except Exception as e:
-            report = f"## {ticker} {dept_name} 오류\n분석 중 예외 발생: {e}"
+            report = f"## {ticker if ticker else '전체 시장'} {dept_name} 오류\n분석 중 예외 발생: {e}"
         return report
     
     def print_investment_decision(self, ticker, final_decision_data):
